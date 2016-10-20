@@ -23,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
     public void method2(View view){
         HttpUtil.getInstance()
                 .getApiInterface("http://gc.ditu.aliyun.com")
+//                .getApiInterface()
                 .getWeather("苏州")
                 .enqueue(new Callback<WeatherModel>() {
                     @Override
                     public void onResponse(Call<WeatherModel> call, Response<WeatherModel> response) {
-                        if(response!=null&&response.body()!=null){
+                        if(response!=null&&response.isSuccessful()&&response.body()!=null){
                             Toast.makeText(MainActivity.this,response.body().getLon()+":"+response.body().getLat(),Toast.LENGTH_SHORT).show();
                             Log.i(TAG,response.body().getLon()+":"+response.body().getLat());
                         }
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         t.printStackTrace();
                         Log.e(TAG,"请求失败="+t.getMessage()+":"+t.toString());
                     }
-        });
+                });
     }
 
     public void method1(View view){
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new Callback<TestModel>() {
                     @Override
                     public void onResponse(Call<TestModel> call, Response<TestModel> response) {
-                        if(response!=null&&response.body()!=null) {
+                        if(response!=null&&response.isSuccessful()&&response.body()!=null) {
                             Toast.makeText(MainActivity.this, response.body().getLogin(), Toast.LENGTH_SHORT).show();
                             Log.i(TAG,response.body().getLogin());
                         }
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(Call<TestModel> call, Throwable t) {
                         Log.e(TAG,"请求失败="+t.getMessage()+":"+t.toString());
                     }
-        });
+                });
     }
 
 
